@@ -1,11 +1,17 @@
 import React from "react";
+import { useRouter } from "next/router";
 const Todolist = ({title, desc}) => {
+  const router = useRouter();
+  const {
+    query: { title, desc },
+  } = router;
+  const myTodo = { title, desc };
   return (
     <div className="flex flex-col gap-6 mt-4 border border-red-300 p-4">
       <div className=" flex flex-col gap-6">
-        <div className="text-2xl font-semibold ">{title} </div>
+        <div className="text-2xl font-semibold ">{myTodo.title} </div>
         <div className="text-xl ">
-         {desc}
+         {myTodo.desc}
         </div>
       </div>
       {/* buttons */}

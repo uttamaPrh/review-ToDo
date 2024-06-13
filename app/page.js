@@ -1,10 +1,12 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 const Todolist = () => {
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [todos, setTodos] = useState([]);
- function setTodo() {
+  function setTodo() {
     if (title.trim() === "" || desc.trim() === "") {
       alert("Title and description cannot be empty");
       return;
@@ -16,6 +18,20 @@ const Todolist = () => {
     setTitle("");
     setDesc("");
   }
+  function dltItem(newIndex) {
+    setTodos(todos.filter((_, index) => index !== newIndex));
+  }
+  function editTodo(index) {
+    router.push(`/edit/${index}`);
+    // const todo = todos[index];
+    // const pathname = `/edit/${index}`.toString();
+    // console.log(pathname.toString()); // should print "string"
+    // router.push({
+    //   pathname: pathname,
+    //   query: { title: todo.title, desc: todo.desc },
+    // });
+  }
+
   return (
     <>
       {/* input starts  */}
@@ -58,10 +74,16 @@ const Todolist = () => {
             <div className="text-xl ">{todo.desc}</div>
           </div>
           <div className=" flex items-center justify-end gap-4">
-            <div className="bg-green-500 text-white font-xl rounded py-2 px-4 cursor-pointer">
+            <div
+              className="bg-green-500 text-white font-xl rounded py-2 px-4 cursor-pointer"
+              onClick={() => editTodo(index)}
+            >
               Edit
             </div>
-            <div className="bg-red-500 text-white font-xl rounded px-4 py-2  cursor-pointer">
+            <div
+              className="bg-red-500 text-white font-xl rounded px-4 py-2  cursor-pointer"
+              onClick={() => dltItem(index)}
+            >
               Delete
             </div>
           </div>
